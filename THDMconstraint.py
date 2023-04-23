@@ -464,7 +464,7 @@ print("\nlight Higgs\n")
 a = int(input("Enter model type: "))
 m_H = 200
 m_A = 500
-df  = pd.read_csv(f'new_result_type{a}_H{m_H}A{m_A}.csv')
+df  = pd.read_csv(f'datafiles/new_result_type{a}_H{m_H}A{m_A}.csv')
 tb = df['be'].to_numpy()
 step = tb[250]-tb[1]
 chi = df['chisq'].to_numpy()
