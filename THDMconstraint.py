@@ -212,8 +212,8 @@ def Gamma(m_h,A,B,x,m_pm):
 
 print("\nlight Higgs\n")
 a = int(input("Enter model type: "))
-m_H = 800
-m_A = 800
+m_H=int(input("mass of Heavy scalar Higgs(H) in GeV: "))
+m_A=int(input("mass of pseudoscalar Higgs(A) in GeV: "))
 df  = pd.read_csv(f'datafiles/new_result_type{a}_H{m_H}A{m_A}.csv')
 tb = df['be'].to_numpy()
 step = tb[250]-tb[1]
