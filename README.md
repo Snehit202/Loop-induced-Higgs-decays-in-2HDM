@@ -12,6 +12,6 @@ Required packages-
 
 Instructions on running the code:
 1. Example files are already available in the datafiles folder. One can simply run the file THDMconstraint.py(requires additional rundec package: type "pip install rundec" to install) to get the final interactive plots.
-2. To generate your own datafiles with different mass values of H and A, first, clone the latest version of HiggsBounds and HiggsSignals from HiggsTools and install the python interface. The instructions are given at-
+2. To generate your own datafiles with different mass values of H and A, first, clone the latest version of HiggsBounds and HiggsSignals from HiggsTools and install the python interface. The instructions along with the repositories are given at https://gitlab.com/higgsbounds/higgstools
 3. Once the interface is installed, download the HiggsBound and HiggsSignal database from the same git. One has to edit the directory paths in 2HDM_create_data.py's code to access the database and save the generated files at desired destination.
 4. One can then run 2HDM_create_data.py to generate exclusion limits and $\chi^2$ values of the parameter space for different mass values of H and A. After that run THDMconstraint.py to plot the desired results.
