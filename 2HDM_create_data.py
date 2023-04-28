@@ -509,16 +509,17 @@ def GammaA(m_A,A,B,x):
 
 # In[89]:
 
-
+m_H=int(input("mass of Heavy scalar Higgs(H): "))
+m_A=int(input("mass of pseudoscalar Higgs(A): "))
 h = pred.addParticle(HP.BsmParticle("h", "neutral", "even"))
 h.setMass(125.09)
 
 H = pred.addParticle(HP.BsmParticle("H", "neutral", "even"))
-H.setMass(800)
-m_H=800
+H.setMass(m_H)
+
 A = pred.addParticle(HP.BsmParticle("A", "neutral", "odd"))
-A.setMass(800)
-m_A=800
+A.setMass(m_A)
+
 X = pred.addParticle(HP.BsmParticle("X", "single"))
 X.setMass(800)
 
