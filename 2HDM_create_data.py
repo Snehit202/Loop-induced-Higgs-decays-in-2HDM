@@ -40,7 +40,6 @@ m_z = 91.1876
 #2HDM parameters alpha and beta
 #A = np.linspace(-np.pi/2,np.pi/2,10001)
 
-
 def fcp(stg,x,A,B):
     if(x==1):
         return np.cos(A)/np.sin(B)
@@ -67,13 +66,13 @@ def hfp2(A,B):  # particles that couple to phi2 for light higgs
 def hfp1(A,B):  # particles that couple to phi2 for light higgs
     return -np.sin(A)/np.cos(B)
 def hv(A,B):
-    return np.sin(A-B)
+    return np.sin(B-A)
 def Hv(A,B):
-    return np.cos(A-B)
+    return np.cos(B-A)
 def hpm(A,B):
-    return np.sin(A-B) + np.cos(2*B)*np.sin(A+B)/(2*cw**2)
+    return np.sin(B-A) + np.cos(2*B)*np.sin(A+B)/(2*cw**2)
 def Hpm(A,B):
-    return np.cos(A-B) - np.cos(2*B)*np.sin(A+B)/(2*cw**2)
+    return np.cos(B-A) - np.cos(2*B)*np.sin(A+B)/(2*cw**2)
 #calculating Higgs decay widths:
 crd = rundec.CRunDec()
 def coupling(mh):
@@ -119,11 +118,11 @@ def f(x):
 
 
 def As(x):
-    return (x-f(x))/x**2
+    return -(x-f(x))/x**2
 def Af(x):
-    return -(2./x**2)*(x+(x-1.)*f(x))
+    return (2./x**2)*(x+(x-1.)*f(x))
 def Av(x):
-    return (2.*x**2 + 3.*x +3.*(2*x-1.)*f(x))/x**2
+    return -(2.*x**2 + 3.*x +3.*(2*x-1.)*f(x))/x**2
 
 
 #6 H-> 2 photons
@@ -186,7 +185,7 @@ def G_Hpp(mh,A,B,x,m_pm):
     mu = (mh**2)/(4*m_mu**2)
     tau = (mh**2)/(4*m_tau**2)
     pm = (mh**2)/(4*m_pm**2)
-    S = 3*(Af(t)*q1+Af(b)*q2+Af(c)*q1+Af(s)*q2+Af(u)*q1+Af(d)*q2)*(1.-gs/np.pi)+(Af(e)+Af(mu)+Af(tau))*fcp('l',x,A,B)-Av(w)*hv(A,B)-As(pm)*hpm(A,B)*(m_w/m_pm)**2
+    S = 3*(Af(t)*q1+Af(b)*q2+Af(c)*q1+Af(s)*q2+Af(u)*q1+Af(d)*q2)*(1.-gs/np.pi)+(Af(e)+Af(mu)+Af(tau))*fcp('l',x,A,B)+Av(w)*hv(A,B)+As(pm)*hpm(A,B)*(m_w/m_pm)**2
     return(cnt*abs(S)**2)
 def G_Hzp(m_h,A,B,x,m_pm):
     a= 1./137.5
@@ -213,11 +212,11 @@ def G_Hzp(m_h,A,B,x,m_pm):
     w2 = 4*(m_w/m_z)**2
     pm1 = 4*(m_pm/m_h)**2
     pm2 = 4*(m_pm/m_z)**2
-    S = A2v(w1,w2)*hv(A,B)-(3./(sw*cw))*(0.5-(4./3.)*sw**2)*(A2f(u1,u2)+A2f(c1,c2)+A2f(t1,t2)*(1-gs/np.pi))*fcp('u',x,A,B)-(0.5/(sw*cw))*(-0.5+(2./3.)*(sw**2))*(A2f(d1,d2)+A2f(s1,s2)+A2f(b1,b2))*fcp('d',x,A,B) + (0.25/(sw*cw))*(-0.5 + 2*sw**2)*(A2f(e1,e2)+A2f(mu1,mu2)+A2f(tau1,tau2))*fcp('l',x,A,B) + ((1-2*sw**2)/(sw*cw))*I1(pm1,pm2)*hpm(A,B)*(m_w/m_pm)**2
+    S = A2v(w1,w2)*hv(A,B)+(3./(sw*cw))*(0.5-(4./3.)*sw**2)*(A2f(u1,u2)+A2f(c1,c2)+A2f(t1,t2)*(1-gs/np.pi))*fcp('u',x,A,B)+(0.5/(sw*cw))*(-0.5+(2./3.)*(sw**2))*(A2f(d1,d2)+A2f(s1,s2)+A2f(b1,b2))*fcp('d',x,A,B) + (0.25/(sw*cw))*(-0.5 + 2*sw**2)*(A2f(e1,e2)+A2f(mu1,mu2)+A2f(tau1,tau2))*fcp('l',x,A,B) + ((1-2*sw**2)/(sw*cw))*I1(pm1,pm2)*hpm(A,B)*(m_w/m_pm)**2
     return const*abs(S)**2
 def Gamma(m_h,A,B,x,m_pm):
     return hup(m_u, m_h, A, B,x)+hup(m_t, m_h, A, B,x)+hup(m_c, m_h, A, B,x)+hdown(m_d, m_h, A, B,x)+hdown(m_b, m_h, A, B,x)+hdown(m_s, m_h, A, B,x)+hlept(m_e, m_h, A, B,x)+hlept(m_mu, m_h, A, B,x)+hlept(m_tau, m_h, A, B,x)+hW(m_w,m_h,A,B)+hZ(m_z,m_h,A,B)+G_Hgg(m_h,A,B,x)+G_Hpp(m_h,A,B,x,m_pm)+G_Hzp(m_h, A, B,x,m_pm)
-
+print(Gamma(125,0.1,0.5,1,200))
 #Heavy Higgs
 def Fcp(stg,x,A,B):
     if(x==1):
@@ -238,11 +237,17 @@ def Fcp(stg,x,A,B):
         else:
             return np.sin(A)/np.sin(B)
 def Hup(m_u,m_h,A,B,x):
-    mu=qmass(m_u,m_h)
+    if(m_u==m_tt or m_u==m_cc):
+        mu=qmass(m_u,m_h)
+    else:
+        mu=m_u
     Gs = coupling(m_h)
     return 3*G_Hff(mu,m_h)*(dqq(Gs,mu,m_h))*Fcp('u',x,A,B)**2
 def Hdown(m_d,m_h,A,B,x):
-    md=qmass(m_d,m_h)
+    if(m_d==m_bb):
+        md=qmass(m_d,m_h)
+    else:
+        md=m_d
     Gs = coupling(m_h)
     return 3*G_Hff(m_d,m_h)*(dqq(Gs,md,m_h))*Fcp('d',x,A,B)**2
 def Hlept(m_e,m_h,A,B,x):
@@ -257,8 +262,16 @@ def Hhh(m_H,m_h,A,B):
         f = np.sqrt(1-4*(m_h/m_H)**2)
     else:
         f = 0
-    cnt = Gf*((m_w*m_z)**2)/(16*np.sqrt(2)*np.pi*m_H*cw**2)
-    return cnt*f*coeff**2
+    cnt = Gf*((m_z)**4)/(16*np.sqrt(2)*np.pi*m_H)
+    return cnt*f*(coeff)**2
+def HAA(m_H,m_h,A,B):
+    coeff = -np.cos(2*B)*np.cos(A+B)
+    if m_H>=2*m_h:
+        f = np.sqrt(1-4*(m_h/m_H)**2)
+    else:
+        f = 0
+    cnt = Gf*((m_z)**4)/(16*np.sqrt(2)*np.pi*m_H)
+    return cnt*f*(coeff)**2
 def G_HHgg(m_h,A,B,x):
     mh=m_h
     k= (Gf/(36.*np.sqrt(2)*np.pi**3))
@@ -303,7 +316,7 @@ def G_HHpp(mh,A,B,x,m_pm):
     mu = (mh**2)/(4*m_mu**2)
     tau = (mh**2)/(4*m_tau**2)
     pm = (mh**2)/(4*m_pm**2)
-    S = 3*(Af(t)*q1+Af(b)*q2+Af(c)*q1+Af(s)*q2+Af(u)*q1+Af(d)*q2)*(1.-gs/np.pi)+(Af(e)+Af(mu)+Af(tau))*Fcp('l',x,A,B)-Av(w)*Hv(A,B)-As(pm)*Hpm(A,B)*(m_w/m_pm)**2
+    S = 3*(Af(t)*q1+Af(b)*q2+Af(c)*q1+Af(s)*q2+Af(u)*q1+Af(d)*q2)*(1.-gs/np.pi)+(Af(e)+Af(mu)+Af(tau))*Fcp('l',x,A,B)+Av(w)*Hv(A,B)+As(pm)*Hpm(A,B)*(m_w/m_pm)**2
     return(cnt*abs(S)**2)
 def G_HHzp(m_h,A,B,x,m_pm):
     Gs = coupling(m_h)
@@ -337,11 +350,11 @@ def G_HHzp(m_h,A,B,x,m_pm):
     w2 = 4*(m_w/m_z)**2
     pm1 = 4*(m_pm/m_h)**2
     pm2 = 4*(m_pm/m_z)**2
-    S = -A2v(w1,w2)*Hv(A,B)+(3./(sw*cw))*(0.5-(4./3.)*sw**2)*(A2f(u1,u2)+A2f(c1,c2)+A2f(t1,t2))*(1-Gs/np.pi)*Fcp('u',x,A,B)+(0.5/(sw*cw))*(-0.5+(2./3.)*(sw**2))*(A2f(d1,d2)+A2f(s1,s2)+A2f(b1,b2))*(1-Gs/np.pi)*Fcp('d',x,A,B) + (0.25/(sw*cw))*(-0.5 + 2*sw**2)*(A2f(e1,e2)+A2f(mu1,mu2)+A2f(tau1,tau2))*Fcp('l',x,A,B) - ((1-2*sw**2)/(sw*cw))*I1(pm1,pm2)*Hpm(A,B)*(m_w/m_pm)**2
+    S = A2v(w1,w2)*Hv(A,B)+(3./(sw*cw))*(0.5-(4./3.)*sw**2)*(A2f(u1,u2)+A2f(c1,c2)+A2f(t1,t2))*(1-Gs/np.pi)*Fcp('u',x,A,B)+(0.5/(sw*cw))*(-0.5+(2./3.)*(sw**2))*(A2f(d1,d2)+A2f(s1,s2)+A2f(b1,b2))*(1-Gs/np.pi)*Fcp('d',x,A,B) + (0.25/(sw*cw))*(-0.5 + 2*sw**2)*(A2f(e1,e2)+A2f(mu1,mu2)+A2f(tau1,tau2))*Fcp('l',x,A,B) + ((1-2*sw**2)/(sw*cw))*I1(pm1,pm2)*Hpm(A,B)*(m_w/m_pm)**2
     return const*abs(S)**2
 def GammaH(m_h,A,B,x,m_pm):
-    return Hhh(m_h,125.09,A,B)+Hup(m_uu, m_h, A, B,x)+Hup(m_tt, m_h, A, B,x)+Hup(m_cc, m_h, A, B,x)+Hdown(m_dd, m_h, A, B,x)+Hdown(m_bb, m_h, A, B,x)+Hdown(m_ss, m_h, A, B,x)+Hlept(m_e, m_h, A, B,x)+Hlept(m_mu, m_h, A, B,x)+Hlept(m_tau, m_h, A, B,x)+HW(m_w,m_h,A,B)+HZ(m_z,m_h,A,B)+G_HHgg(m_h,A,B,x)+G_HHpp(m_h,A,B,x,m_pm)+G_HHzp(m_h, A, B,x,m_pm)
-
+    return Hhh(m_h,125.09,A,B)+HAA(m_h,m_A,A,B)+Hup(m_uu, m_h, A, B,x)+Hup(m_tt, m_h, A, B,x)+Hup(m_cc, m_h, A, B,x)+Hdown(m_dd, m_h, A, B,x)+Hdown(m_bb, m_h, A, B,x)+Hdown(m_ss, m_h, A, B,x)+Hlept(m_e, m_h, A, B,x)+Hlept(m_mu, m_h, A, B,x)+Hlept(m_tau, m_h, A, B,x)+HW(m_w,m_h,A,B)+HZ(m_z,m_h,A,B)+G_HHgg(m_h,A,B,x)+G_HHpp(m_h,A,B,x,m_pm)+G_HHzp(m_h, A, B,x,m_pm)
+print(GammaH(800,0.1,0.5,1,800))
 #CP odd Higgs
 
 #1. A->ff~/qq~
@@ -382,20 +395,37 @@ def Acp(stg,x,B):
     	print('Invalid value')
     	return 0
             
-            
+dqqA = lambda a,mq,mh : 1+5.67*a/np.pi +(35.94+3.83-1.36*5-2*np.log(mh/m_t)+(1./6.)*(2*np.log(mq/mh)**2))*(a/np.pi)**2 +(164.14-25.77*5+.26*25)*(a/np.pi)**3            
 def Aup(m_u,m_H,B,x):
-        mu = qmass(m_u,m_H)
+        if(m_u==m_tt or m_u==m_cc):
+            mu=qmass(m_u,m_H)
+        else:
+            mu=m_u
         Gs = coupling(m_H)
-        return 3*G_Aff(m_u,m_H)*(dqq(Gs,mu,m_H))*Acp('u',x,B)**2
+        return 3*G_Aff(m_u,m_H)*(dqqA(Gs,mu,m_H))*Acp('u',x,B)**2
 def Adown(m_d,m_H,B,x):
-        md = qmass(m_d,m_H)
+        if(m_d==m_bb):
+            md=qmass(m_d,m_H)
+        else:
+            md=m_d
         Gs = coupling(m_H)
-        return 3*G_Aff(m_d,m_H)*(dqq(Gs,md,m_H))*Acp('d',x,B)**2
+        return 3*G_Aff(m_d,m_H)*(dqqA(Gs,md,m_H))*Acp('d',x,B)**2
 def Alept(m_e,m_H,B,x):
         return G_Aff(m_e,m_H)*Acp('l',x,B)**2
 def AZh(m_A,m_z,m_h,A,B):
     coef = np.cos(B-A)**2
-    cnt = (Gf*m_w**2)/(8*np.sqrt(2)*np.pi*m_z*m_z*m_A*m_A*m_A*cw**2)
+    if(m_A>=m_z+m_h):
+        cnt = (Gf*m_w**2)/(8*np.sqrt(2)*np.pi*m_z*m_z*m_A*m_A*m_A*cw**2)
+    else:
+        cnt=0
+    lam = (m_A**2 - m_h**2 + m_z**2)**2-4*(m_A*m_z)**2
+    return cnt*coef*lam**1.5
+def AZH(m_A,m_z,m_h,A,B):
+    coef = np.sin(B-A)**2
+    if(m_A>=m_z+m_h):
+        cnt = (Gf*m_w**2)/(8*np.sqrt(2)*np.pi*m_z*m_z*m_A*m_A*m_A*cw**2)
+    else:
+        cnt=0
     lam = (m_A**2 - m_h**2 + m_z**2)**2-4*(m_A*m_z)**2
     return cnt*coef*lam**1.5
 
@@ -404,9 +434,9 @@ def G_Agg(mh,B,x):
         gs = (12.*np.pi)/(21*np.log((mh**2)/0.004))
         cnt = 1*k*(gs**2)*mh**3
         E = (95./4 - 7.)*gs/np.pi
-        m_d=qmass(m_dd,mh)
-        m_u=qmass(m_uu,mh)
-        m_s=qmass(m_ss,mh)
+        m_d=m_dd
+        m_u=m_uu
+        m_s=m_ss
         m_t=qmass(m_tt,mh)
         m_c=qmass(m_cc,mh)
         m_b=qmass(m_bb,mh) 
@@ -424,9 +454,9 @@ def G_App(mh,B,x):
         k= 2*(Gf*(a**2)/(128.*np.sqrt(2)*np.pi**3))
         q1=Acp('u',x,B)*4./9.
         q2=Acp('d',x,B)*1./9.
-        m_d=qmass(m_dd,mh)
-        m_u=qmass(m_uu,mh)
-        m_s=qmass(m_ss,mh)
+        m_d=m_dd
+        m_u=m_uu
+        m_s=m_ss
         m_t=qmass(m_tt,mh)
         m_c=qmass(m_cc,mh)
         m_b=qmass(m_bb,mh)        
@@ -446,9 +476,9 @@ def G_App(mh,B,x):
 def G_Azp(m_h,B,x):
         gs = (12.*np.pi)/(21*np.log((m_h**2)/0.004))
         a= 1./127.5
-        m_d=qmass(m_dd,m_h)
-        m_u=qmass(m_uu,m_h)
-        m_s=qmass(m_ss,m_h)
+        m_d=m_dd
+        m_u=m_uu
+        m_s=m_ss
         m_t=qmass(m_tt,m_h)
         m_c=qmass(m_cc,m_h)
         m_b=qmass(m_bb,m_h)        
@@ -475,8 +505,7 @@ def G_Azp(m_h,B,x):
         S = (3./(sw*cw))*(0.5-(4./3.)*sw**2)*(I2(u1,u2)+I2(c1,c2)+I2(t1,t2))*(1-gs/np.pi)*Acp('u',x,B)+(0.5/(sw*cw))*(-0.5+(2./3.)*(sw**2))*(I2(d1,d2)+I2(s1,s2)+I2(b1,b2))*(1-gs/np.pi)*Acp('d',x,B)+ (0.25/(sw*cw))*(-0.5 + 2*sw**2)*(I2(e1,e2)+I2(mu1,mu2)+I2(tau1,tau2))*Acp('l',x,B)
         return const*abs(S)**2
 def GammaA(m_A,A,B,x):
-        return AZh(m_A,m_z,125.09,A,B)+Aup(m_uu, m_A, B,x)+Aup(m_tt, m_A, B,x)+ Aup(m_cc, m_A, B,x)+Adown(m_dd, m_A, B,x)+Adown(m_bb, m_A, B,x)+Adown(m_ss, m_A, B,x)+Alept(m_e, m_A, B,x)+Alept(m_mu, m_A, B,x)+Alept(m_tau, m_A, B,x)+G_Agg(m_A,B,x)+G_App(m_A,B,x)+G_Azp(m_A, B,x)
-
+        return AZh(m_A,m_z,125.09,A,B)+AZH(m_A,m_z,m_H,A,B)+Aup(m_uu, m_A, B,x)+Aup(m_tt, m_A, B,x)+ Aup(m_cc, m_A, B,x)+Adown(m_dd, m_A, B,x)+Adown(m_bb, m_A, B,x)+Adown(m_ss, m_A, B,x)+Alept(m_e, m_A, B,x)+Alept(m_mu, m_A, B,x)+Alept(m_tau, m_A, B,x)+G_Agg(m_A,B,x)+G_App(m_A,B,x)+G_Azp(m_A, B,x)
 
 # In[89]:
 
@@ -485,13 +514,13 @@ h = pred.addParticle(HP.BsmParticle("h", "neutral", "even"))
 h.setMass(125.09)
 
 H = pred.addParticle(HP.BsmParticle("H", "neutral", "even"))
-H.setMass(200)
-m_H=200
+H.setMass(800)
+m_H=800
 A = pred.addParticle(HP.BsmParticle("A", "neutral", "odd"))
-A.setMass(500)
-m_A=500
+A.setMass(800)
+m_A=800
 X = pred.addParticle(HP.BsmParticle("X", "single"))
-X.setMass(200)
+X.setMass(800)
 
 
 # In[90]:
@@ -557,7 +586,8 @@ def set_H_properties(dc, pt):
     H.setDecayWidth('ss', pt['BRH2ss'] * w)
     H.setDecayWidth('tautau', pt['BRH2ll'] * w)
     H.setDecayWidth('h', 'h', pt['BRH2hh'] * w)
-    if abs(H.totalWidth() - w) > 1e-3:
+    H.setDecayWidth('A', 'A', pt['BRH2AA'] * w)
+    if abs(H.totalWidth() - w) > 1e-1:
         print(H.totalWidth())
         print(w)
         raise DecayError("Missing decay channel for particle H.")
@@ -582,6 +612,7 @@ def set_A_properties(dc, pt):
     A.setDecayWidth('ss', pt['BRA2ss'] * w)
     A.setDecayWidth('tautau', pt['BRA2ll'] * w)
     A.setDecayWidth('Z', 'h', pt['BRA2Zh'] * w)
+    A.setDecayWidth('Z', 'H', pt['BRA2ZH'] * w)
     if abs(A.totalWidth() - w) > .15:
         print(A.totalWidth())
         print(w)
@@ -600,12 +631,13 @@ def read_scanners_output(x):
     hmu=hlept(m_mu,125.09,a,b,x)/G
     hcc=hup(m_c,125.09,a,b,x)/G
     hss=hdown(m_s,125.09,a,b,x)/G
-    hzz=.91*hZ(m_z,125.09,a,b)/G
+    hzz=hZ(m_z,125.09,a,b)/G
     hww=hW(m_w,125.09,a,b)/G
     hgg=G_Hgg(125.09,a,b,x)/G
     hpp=G_Hpp(125.09,a,b,x,800)/G
     hzp=G_Hzp(125.09,a,b,x,800)/G
     GH = GammaH(m_H,a,b,x,800)
+    print(GH)
     Hbb = Hdown(m_bb,m_H,a,b,x)/GH
     Htau= Hlept(m_tau,m_H,a,b,x)/GH
     Hmu=Hlept(m_mu,m_H,a,b,x)/GH
@@ -618,7 +650,9 @@ def read_scanners_output(x):
     Hpp=G_HHpp(m_H,a,b,x,800)/GH
     Hzp=G_HHzp(m_H,a,b,x,800)/GH
     H2hh = Hhh(m_H,125.09,a,b)/GH
+    H2AA = HAA(m_H,m_A,a,b)/GH
     GA = GammaA(m_A,a,b,x)
+    print(GA)
     Abb = Adown(m_bb,m_A,b,x)/GA
     Atau= Alept(m_tau,m_A,b,x)/GA
     Ahmu=Alept(m_mu,m_A,b,x)/GA
@@ -629,8 +663,9 @@ def read_scanners_output(x):
     App=G_App(m_A,b,x)/GA
     Azp=G_Azp(m_A,b,x)/GA
     Azh = AZh(m_A,m_z,125.09,a,b)/GA
+    AzH=AZH(m_A,m_z,m_H,a,b)/GA
     dcs = []
-    for i in range(np.size(a)):
+    for i in range(len(tb)):
         dc = {}
         dc['tb'] = tb[i]
         dc['al'] = a[i]
@@ -653,7 +688,9 @@ def read_scanners_output(x):
         dc['BRA2ss'] = np.abs(Ass[i])
         dc['BRA2ll'] = np.abs(Atau[i])
         dc['BRA2Zh'] = np.abs(Azh[i])
+        dc['BRA2ZH'] = np.abs(AzH[i])
         dc['BRH2hh'] = np.abs(H2hh[i])
+        dc['BRH2AA'] = np.abs(H2AA[i])
         dc['BRH2WW'] = np.abs(Hww[i])
         dc['BRH2ZZ'] = np.abs(Hzz[i])
         dc['BRH2bb'] = np.abs(Hbb[i])
