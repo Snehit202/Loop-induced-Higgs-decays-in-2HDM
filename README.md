@@ -8,3 +8,10 @@ The best-fit and excluded regions of the 2HDM parameter space is calculated in t
 Required packages-
 1. HiggsTools with HiggsBounds and HiggsSignals database. Instructions for using the python interface is in the documentation of HiggsTools repository.
 2. rundec: a python wrapper built on CRunDec for calculating running quark mass and strong coupling constant.
+3. Standard python packages: numpy, matplotlib, pandas
+
+Instructions on running the code:
+1. Example files are already available in the datafiles folder. One can simply run the file THDMconstraint.py(requires additional rundec package: type "pip install rundec" to install) to get the final interactive plots.
+2. To generate your own datafiles with different mass values of H and A, first, clone the latest version of HiggsBounds and HiggsSignals from HiggsTools and install the python interface. The instructions are given at-
+3. Once the interface is installed, download the HiggsBound and HiggsSignal database from the same git. One has to edit the directory paths in 2HDM_create_data.py's code to access the database and save the generated files at desired destination.
+4. One can then run 2HDM_create_data.py to generate exclusion limits and $\chi^2$ values of the parameter space for different mass values of H and A. After that run THDMconstraint.py to plot the desired results.
