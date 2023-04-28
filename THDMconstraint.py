@@ -212,6 +212,7 @@ def Gamma(m_h,A,B,x,m_pm):
 
 print("\nlight Higgs\n")
 a = int(input("Enter model type: "))
+print("\n Available pair-wise mass values of Heavy scalar(H) and pseudoscalar(H), respectively, for analysis, in GeV are:\n (200,200), (250,250), (300,300), (500,500), (800, 800), (200,300), (200,500), (800,500), (500,800)\n")
 m_H=int(input("mass of Heavy scalar Higgs(H) in GeV: "))
 m_A=int(input("mass of pseudoscalar Higgs(A) in GeV: "))
 df  = pd.read_csv(f'datafiles/new_result_type{a}_H{m_H}A{m_A}.csv')
