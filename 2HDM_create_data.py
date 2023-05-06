@@ -402,14 +402,14 @@ def Aup(m_u,m_H,B,x):
         else:
             mu=m_u
         Gs = coupling(m_H)
-        return 3*G_Aff(m_u,m_H)*(dqqA(Gs,mu,m_H))*Acp('u',x,B)**2
+        return 3*G_Aff(mu,m_H)*(dqqA(Gs,mu,m_H))*Acp('u',x,B)**2
 def Adown(m_d,m_H,B,x):
         if(m_d==m_bb):
             md=qmass(m_d,m_H)
         else:
             md=m_d
         Gs = coupling(m_H)
-        return 3*G_Aff(m_d,m_H)*(dqqA(Gs,md,m_H))*Acp('d',x,B)**2
+        return 3*G_Aff(md,m_H)*(dqqA(Gs,md,m_H))*Acp('d',x,B)**2
 def Alept(m_e,m_H,B,x):
         return G_Aff(m_e,m_H)*Acp('l',x,B)**2
 def AZh(m_A,m_z,m_h,A,B):
