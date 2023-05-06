@@ -278,9 +278,9 @@ def G_HHgg(m_h,A,B,x):
     gs = (12.*np.pi)/(21*np.log((mh**2)/0.004))
     cnt = 1*k*(gs**2)*mh**3
     E = (95./4 - 7.)*gs/np.pi
-    m_d=qmass(m_dd,m_h)
-    m_u=qmass(m_uu,m_h)
-    m_s=qmass(m_ss,m_h)
+    m_d=m_dd
+    m_u=m_uu
+    m_s=m_ss
     m_t=qmass(m_tt,m_h)
     m_c=qmass(m_cc,m_h)
     m_b=qmass(m_bb,m_h)
@@ -298,9 +298,9 @@ def G_HHpp(mh,A,B,x,m_pm):
     k= 2*(Gf*(a**2)/(128.*np.sqrt(2)*np.pi**3))
     q1=Fcp('u',x,A,B)*4./9.
     q2=Fcp('d',x,A,B)*1./9.
-    m_d=qmass(m_dd,mh)
-    m_u=qmass(m_uu,mh)
-    m_s=qmass(m_ss,mh)
+    m_d=m_dd
+    m_u=m_uu
+    m_s=m_ss
     m_t=qmass(m_tt,mh)
     m_c=qmass(m_cc,mh)
     m_b=qmass(m_bb,mh)    
@@ -321,9 +321,9 @@ def G_HHpp(mh,A,B,x,m_pm):
 def G_HHzp(m_h,A,B,x,m_pm):
     Gs = coupling(m_h)
     a= 1./127.5
-    m_d=qmass(m_dd,m_h)
-    m_u=qmass(m_uu,m_h)
-    m_s=qmass(m_ss,m_h)
+    m_d=m_dd
+    m_u=m_uu
+    m_s=m_ss
     m_t=qmass(m_tt,m_h)
     m_c=qmass(m_cc,m_h)
     m_b=qmass(m_bb,m_h)    
